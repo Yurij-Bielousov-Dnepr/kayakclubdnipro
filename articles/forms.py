@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.contenttypes.forms import generic_inlineformset_factory
 from django.utils.translation import gettext as _
-import reviews
+import articles
 from .models import Helper, ReviewHelper, ReviewArt_Event, Like
 from events.models import Article, Event, Tag_article
 from accounts.models import *

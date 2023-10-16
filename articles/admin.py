@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reviews.models import ReviewHelper, ReviewArt_Event
+from articles.models import ReviewHelper, ReviewArt_Event
 
 
 @admin.register(ReviewArt_Event)

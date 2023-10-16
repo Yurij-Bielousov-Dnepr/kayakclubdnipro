@@ -15,10 +15,10 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView, UpdateView
 from django.views.generic.edit import CreateView
 from .models import Like
-import reviews.models
+import articles.models
 from .decorators import admin_only
 from .forms import *
-from reviews.models import *
+from articles.models import *
 from .forms import ArticleModerationForm, EventModerationForm, ReviewHelperModerationForm
 
 
