@@ -1,0 +1,18 @@
+{% extends "base_templates/base.html" %}
+{% load socialaccount %}
+
+
+
+{% if providers %}
+  <h2>{% trans "Sign in using" %}</h2>
+  <ul class="socialaccount_provider_list">
+    {% for provider in providers %}
+      <li class="socialaccount_provider {% if provider.id == "openid" %}openid {% else %}socialaccount_provider_{{ provider.id }} {% endif %} {% if not provider.enabled %}socialaccount_disabled{% endif %}">
+        <a href="{% provider_login_url provider.id process="login" %}" class="btn btn-block btn-social btn-{{ provider.id }} btn-lg">
+          <i class="fa fa-{{ provider.id }} fa-lg"></i>
+          {% blocktrans with name=provider.name %}Sign in with {{ name }}{% endblocktrans %}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

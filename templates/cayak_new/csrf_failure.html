@@ -1,0 +1,7 @@
+{% extends "base_templates/base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "CSRF verification failed" %}</h1>
+  <p>{% trans "The form has expired. Please refresh the page and try again." %}</p>
+{% endblock %}

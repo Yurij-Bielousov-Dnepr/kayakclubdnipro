@@ -1,0 +1,26 @@
+{% extends "base_templates/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+  {% if form_type == 'signup' %}
+    <h1>{% trans "Sign up" %}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Sign up" %}</button>
+    </form>
+    <br>
+    <p>{% trans "Already have an djangoProject?" %} <a href="{% url 'accounts:sign_in' %}">{% trans "Sign in" %}</a></p>
+  {% elif form_type == 'login' %}
+    <h1>{% trans "Sign in" %}</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Sign in" %}</button>
+    </form>
+    <br>
+    <p>{% trans "Don't have an djangoProject yet?" %} <a href="{% url 'accounts:signup' %}">{% trans "Sign up" %}</a></p>
+  {% endif %}
+{% endblock %}
+

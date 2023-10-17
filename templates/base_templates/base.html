@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  </head>
+  <body>
+    {% include '../base_templates/header.html' %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include 'base_templates/footer.html' %}
+
+{#    <script src="{% static 'js/main.js' %}"></script>#}
+  </body>
+</html>

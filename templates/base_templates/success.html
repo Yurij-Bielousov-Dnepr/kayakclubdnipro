@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>{% trans "Success!" %}</h1>
+        <p>{% trans "Your request has been successfully submitted." %}</p>
+        <a href="{% url 'index' %}" class="btn btn-primary">{% trans "Home" %}</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

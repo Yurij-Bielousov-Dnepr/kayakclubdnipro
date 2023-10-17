@@ -1,0 +1,33 @@
+{% extends "base_templates/base.html" %}
+
+{% load i18n %}
+{% load socialaccount %}
+
+{% block content %}
+
+  <h1>{% trans "Sign in" %}</h1>
+  <form method="post">
+    {% csrf_token %}
+      <label for="email">{% trans "Enter email" %}</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">{% trans "Enter password" %}</label><br>
+    <input type="password" id="password" name="password"><br>
+    <br>
+{#    <a href="{% provider_login_url 'google' %}">#}
+{#      <button type="button">{% trans "Sign in with Google" %}</button>#}
+{#    </a>#}
+{#    <a href="{% provider_login_url 'facebook' %}">#}
+{#      <button type="button">{% trans "Sign in with Facebook" %}</button>#}
+{#    </a>#}
+{#    <a href="{% provider_login_url 'twitter' %}">#}
+{#      <button type="button">{% trans "Sign in with Twitter" %}</button>#}
+{#    </a>#}
+{#    <a href="{% provider_login_url 'linkedin' %}">#}
+{#      <button type="button">{% trans "Sign in with LinkedIn" %}</button>#}
+{#    </a>#}
+{#    <br><br>#}
+    <button type="submit">{% trans "Sign in" %}</button>
+  </form>
+  <br>
+  <a href="{% url 'helpy:index' %}">{% trans "Go to homepage" %}</a>
+{% endblock %}

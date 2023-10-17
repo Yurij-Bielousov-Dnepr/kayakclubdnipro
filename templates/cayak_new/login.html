@@ -1,0 +1,35 @@
+{% extends "base_templates/base.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+  <h1>{% trans "Sign In" %}</h1>
+  {% if request.resolver_match.url_name == 'accounts:sign_in' %}
+    {% if perms.accounts.can_view_auth_error %}
+      {% if request.GET.auth_error %}
+        <div class="alert alert-danger">
+          {{ request.GET.auth_error }}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="alert alert-danger">
+        {% trans "You are not allowed to view authentication errors." %}
+      </div>
+    {% endif %}
+  {% endif %}
+  <form class="login" method="POST" action="{% url 'accounts:sign_in' %}">
+    {% csrf_token %}
+    <label for="id_email">{% trans "Email" %}</label>
+    <input type="email" name="email" id="id_email" placeholder="{% trans 'Email' %}" required autofocus>
+    <label for="id_password">{% trans "Password" %}</label>
+    <input type="password" name="password" id="id_password" placeholder="{% trans 'Password' %}" required>
+
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+
+    <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+  </form>
+{% endblock %}

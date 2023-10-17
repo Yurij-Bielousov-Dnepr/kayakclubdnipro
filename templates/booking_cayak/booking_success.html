@@ -1,0 +1,24 @@
+{% extends 'base_templates/base.html' %}
+
+{% block content %}
+
+  <h1>Бронювання успішно виконано!</h1>
+  <p>Дякуємо за ваше бронювання. Деталі бронювання:</p>
+  <ul>
+    <li>Човен: {{ booking.boat }}</li>
+    <li>Дата початку прокату: {{ booking.start_date }}</li>
+    <li>Тривалість прокату: {{ booking.duration }} годин</li>
+    <li>Сума для оплати: {{ booking.price }}</li>
+    {% if booking.discounts %}
+      <li>Застосовані пільги:</li>
+      <ul>
+        {% for discount in booking.discounts %}
+          <li>{{ discount }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if booking.total_with_discounts %}
+      <li>Сума з урахуванням пільг: {{ booking.total_with_discounts }}</li>
+    {% endif %}
+  </ul>
+{% endblock %}

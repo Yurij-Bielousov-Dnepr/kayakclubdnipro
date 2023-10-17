@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <h1>Статистика</h1>
+    <table>
+        <tr>
+            <th>Загальна кількість бронювань:</th>
+            <td>{{ total_bookings }}</td>
+        </tr>
+        <tr>
+            <th>Загальний дохід:</th>
+            <td>{{ total_revenue }}</td>
+        </tr>
+        <!-- Додайте інші дані для відображення -->
+    </table>
+{% endblock %}
