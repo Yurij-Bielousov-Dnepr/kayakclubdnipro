@@ -36,20 +36,6 @@ class Event(models.Model):
     #
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    rating = models.IntegerField(default=0)
-    is_approved = models.BooleanField(default=False)
-    is_favorite = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag_article, verbose_name="Tags",  blank=False)
-
-    # def clean(self):
-    #     super().clean()
-    #     for tag in self.tags.all():
-    #         if tag.name not in dict(TAG_ARTICLE_CHOICES).keys():
-    #             raise ValidationError(f"Tag '{tag.name}' is not a valid choice.")
-
 
 class Review(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
