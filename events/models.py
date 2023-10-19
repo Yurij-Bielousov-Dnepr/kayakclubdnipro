@@ -4,18 +4,6 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 # from django.contrib.auth.models import User
-from accounts.models import MyUser
-from helpySamui.constants import REVIEW_RATING_CHOICES, TAG_ARTICLE_CHOICES, TAG_HELP_NAME_CHOICES
-
-
-class Tag_article(models.Model):
-    name = models.CharField(max_length=20, choices=TAG_ARTICLE_CHOICES)
-
-    def __str__(self):
-        return self.get_name_display()
-
-    class Meta:
-        app_label = 'art_event'
 
 
 class Event(models.Model):
@@ -36,14 +24,6 @@ class Event(models.Model):
     #
 
 
-
-class Review(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    reviewer_name = models.CharField(max_length=255)
-    comment = models.TextField()
-    rating = models.IntegerField(choices=REVIEW_RATING_CHOICES)
-    relevance = models.IntegerField(choices=REVIEW_RATING_CHOICES, verbose_name="Relevance")
-    engagement = models.IntegerField(choices=REVIEW_RATING_CHOICES, verbose_name="Engagement")
 
 class Favorites(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
