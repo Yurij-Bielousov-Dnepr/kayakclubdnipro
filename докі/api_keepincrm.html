@@ -1,0 +1,342 @@
+Clients
+Для роботи з клієнтами/лідами
+
+
+
+GET
+/clients
+Отримати список клієнтів
+
+
+POST
+/clients
+Створити клієнта/ліда
+
+
+GET
+/clients/{id}
+Отримати клієнта по ідентифікатору
+
+
+PATCH
+/clients/{id}
+Оновити дані клієнта
+
+
+DELETE
+/clients/{id}
+Видалити клієнта по ідентифікатору
+
+
+POST
+/clients/{client_id}/comments
+Створити нотатку
+
+
+GET
+/clients/statuses
+Отримати список статусів
+
+Agreements
+Для роботи з угодами (замовленнями)
+
+
+
+GET
+/agreements
+Отримати список угод
+
+
+POST
+/agreements
+Створити угоду
+
+
+GET
+/agreements/{id}
+Отримати угоду по ідентифікатору
+
+
+PATCH
+/agreements/{id}
+Оновити дані угоди
+
+
+DELETE
+/agreements/{id}
+Видалити угоду по ідентифікатору
+
+
+POST
+/agreements/{agreement_id}/comments
+Створити нотатку
+
+
+POST
+/agreements/{agreement_id}/deliveries
+Додати ТТН до угоди
+
+
+GET
+/agreements/funnels
+Отримати список воронок продажів
+
+
+GET
+/agreements/stages
+Отримати список етапів
+
+
+GET
+/agreements/statuses
+Отримати список причин виграшу/програшу
+
+Tasks
+Для роботи із завданнями
+
+
+
+GET
+/tasks
+Отримати список завдань
+
+
+POST
+/tasks
+Створити завдання
+
+
+GET
+/tasks/{id}
+Отримати завдання по ідентифікатору
+
+
+PATCH
+/tasks/{id}
+Оновити дані завдання
+
+
+DELETE
+/tasks/{id}
+Видалити завдання по ідентифікатору
+
+
+POST
+/tasks/{task_id}/comments
+Створити нотатку
+
+
+GET
+/tasks/categories
+Отримати список типів
+
+
+GET
+/tasks/statuses
+Отримати список статусів
+
+Payments
+Для роботи з фінансами
+
+
+
+GET
+/payments
+Отримати список фінансів
+
+
+POST
+/payments
+Створити фінанси
+
+
+GET
+/payments/categories
+Отримати список категорій
+
+
+GET
+/payments/purses
+Отримати список гаманців
+
+
+GET
+/payments/segments
+Отримати список сегментів
+
+Products
+Для роботи з товарами в прайс-листі
+
+
+
+GET
+/products
+Отримати список товарів
+
+
+POST
+/products
+Створити товар
+
+
+GET
+/products/{id}
+Отримати товар по ідентифікатору
+
+
+PATCH
+/products/{id}
+Оновити дані товару по ідентифікатору
+
+
+DELETE
+/products/{id}
+Видалити товар по ідентифікатору
+
+
+GET
+/products/sku/{product_sku}
+Отримати товар по артикулу
+
+
+PATCH
+/products/sku/{product_sku}
+Оновити дані товару по артикулу
+
+
+DELETE
+/products/sku/{product_sku}
+Видалити товар по артикулу
+
+
+GET
+/products/categories
+Отримати список категорій
+
+
+POST
+/products/categories
+Створити категорію
+
+Materials
+Для роботи з матеріалами на складі
+
+
+
+GET
+/materials
+Отримати список матеріалів
+
+
+POST
+/materials
+Створити матеріал
+
+
+GET
+/materials/{id}
+Отримати матеріал по ідентифікатору
+
+
+PATCH
+/materials/{id}
+Оновити дані матеріалу по ідентифікатору
+
+
+DELETE
+/materials/{id}
+Видалити матеріал по ідентифікатору
+
+
+POST
+/materials/{id}/offers
+Створити модифікацію для матеріалу по ідентифікатору
+
+
+GET
+/materials/sku/{material_sku}
+Отримати матеріал по артикулу
+
+
+PATCH
+/materials/sku/{material_sku}
+Оновити дані матеріалу по артикулу
+
+
+DELETE
+/materials/sku/{material_sku}
+Видалити матеріал по артикулу
+
+
+POST
+/materials/sku/{material_sku}/offers
+Створити модифікацію для матеріалу по артикулу
+
+
+GET
+/materials/categories
+Отримати список категорій
+
+
+POST
+/materials/categories
+Створити категорію
+
+Transfers
+Для роботи із залишками матеріалів на складі
+
+
+
+POST
+/transfers
+Створити прихід, списання або повернення залишків
+
+Contractors
+Для роботи з підрядниками
+
+
+
+GET
+/contractors
+Отримати список підрядників
+
+
+POST
+/contractors
+Створити підрядника
+
+Deliveries
+Для роботи з доставками
+
+
+
+GET
+/deliveries
+Отримати список доставок
+
+Offices
+Для роботи з філіями
+
+
+
+GET
+/offices
+Отримати список філій
+
+Sources
+Для роботи з джерелами
+
+
+
+GET
+/sources
+Отримати список джерел
+
+Users
+Для роботи з працівниками (користувачами)
+
+
+
+GET
+/users
+Отримати список працівників (користувачів)
