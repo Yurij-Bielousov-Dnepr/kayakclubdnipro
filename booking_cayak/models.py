@@ -110,52 +110,6 @@ class Price(models.Model):
         verbose_name_plural = "Ціни:"
 
 
-class Booking(models.Model):
-    CLIENT = 'Клієнт'
-    MANAGER = 'Менеджер'
-    ADMIN = 'Адміністратор'
-    USER_TYPE_CHOICES = [
-        (CLIENT, 'Клієнт'),
-        (MANAGER, 'Менеджер'),
-        (ADMIN, 'Адміністратор'),
-    ]
-
-    DISCOUNT_CHOICES = [
-        ('DR', 'DR'),
-        ('SOU', 'SOU'),
-        ('Volunteer', 'Волонтер'),
-        ('Refugee', 'Біженець'),
-    ]
-
-    boat_status = models.ForeignKey(BoatStatus, null=True, on_delete=models.CASCADE, verbose_name="Статус лодки")
-    start_time = models.DateTimeField(default=datetime(2022, 2, 24, 4, 0), null=True, blank=True, verbose_name="Час початку")
-    duration = models.PositiveIntegerField(null=True, blank=True, verbose_name="Тривалість")
-    boat_type = models.ForeignKey(BoatType, on_delete=models.CASCADE, default=None, verbose_name="Тип лодки",
-                                  related_name="bookings")
-    discount = models.CharField(max_length=10, choices=DISCOUNT_CHOICES, blank=True, null=True, verbose_name="Знижка")
-    is_first_time_booking = models.BooleanField(default=True, verbose_name="Перше бронювання")
-    special_conditions = models.TextField(blank=True, null=True, verbose_name="Особливі умови")
-    boats = models.ManyToManyField(Boat, through='BoatBooking', verbose_name="Обрані човни", blank=True,
-                                   related_name="booked_bookings")
-
-    def clean(self):
-        super().clean()  # Викликати базовий метод clean() для перевірки загальних правил
-
-        if self.boat_status.status != 'F':
-            raise ValidationError('Ця лодка недоступна для бронювання.')
-
-        booking_start = self.start_time
-        booking_end = self.start_time + timezone.timedelta(hours=self.duration)
-
-        conflicting_bookings = Booking.objects.filter(
-            boats__boat_status__boat__boat_type=self.boat_status.boat.boat_type,
-            start_time__lt=booking_end,
-            end_time__gt=booking_start
-        ).exclude(pk=self.pk)
-
-        if conflicting_bookings.exists():
-            raise ValidationError('Є конфлікт з періодом бронювання цієї лодки.')
-
     def get_rental_price(self):
         price = Price.objects.get(boat_type=self.boat_status.boat.boat_type, duration=self.duration)
         return price.price_per_hour * self.duration
@@ -177,8 +131,3 @@ class Booking(models.Model):
     class Meta:
          verbose_name_plural = "Бронювання"
 
-
-class BoatBooking(models.Model):
-    boat = models.ForeignKey(Boat, on_delete=models.CASCADE)
-    booking = models.ForeignKey(Booking, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1, verbose_name='Кількість човнів')
