@@ -131,3 +131,19 @@ class Price(models.Model):
     class Meta:
          verbose_name_plural = "Бронювання"
 
+class Review(models.Model):
+
+    reviewer_name = models.CharField(max_length=255)
+    name_service = models.CharField(max_length=255)
+    rating = models.PositiveSmallIntegerField(choices=REVIEW_RATING_CHOICES)
+    tag = models.CharField(choices=TAG_ARTICLE_CHOICES, max_length=100, blank=False)
+    review_text = models.TextField()
+    wishes = models.TextField(blank=True)
+    is_approved = models.BooleanField(default=False)
+    likes = GenericRelation(Like)
+
+    def get_like_url(self):
+        return reverse('like_toggle', args=[self.pk, self.__class__.__name__.lower()])
+
+    def __str__(self):
+        return f"Review for {self.helper_name} by {self.reviewer_name}"
