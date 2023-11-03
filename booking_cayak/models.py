@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from django.contrib.contenttypes.fields import GenericRelation
+from django.urls import reverse
 from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -145,16 +148,16 @@ class Review(models.Model):
 
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
     TAG_ARTICLE_CHOICES = (
-        (TAG_ARTICLE_MOTO_RENT, 'Moto Rent'),
-        (TAG_ARTICLE_MOTO_BEGINNER, 'Moto Beginner'),
-        (TAG_ARTICLE_MOTO_SOS, 'Moto SOS'),
-        (TAG_ARTICLE_RENT_ESTATE, 'Rent Estate'),
-        (TAG_ARTICLE_PUBLIC_SERV, 'Public Service'),
-        (TAG_ARTICLE_LANG_SCHOL, 'Language School'),
-        (TAG_ARTICLE_MED_HELP, 'Medical Help'),
-        (TAG_ARTICLE_SERV_TRANSL, 'Translation Services'),
-        (TAG_ARTICLE_SHOPPING_DESTINATION, 'Shopping Destination'),
-        (TAG_ARTICLE_SOUVENIRS, 'Souvenirs'),
+        ("TAG_ARTICLE_MOTO_RENT", "Moto Rent"),
+        ("TAG_ARTICLE_MOTO_BEGINNER", "Moto Beginner"),
+        ("TAG_ARTICLE_MOTO_SOS", "Moto SOS"),
+        ("TAG_ARTICLE_RENT_ESTATE", "Rent Estate"),
+        ("TAG_ARTICLE_PUBLIC_SERV", "Public Service"),
+        ("TAG_ARTICLE_LANG_SCHOL", "Language School"),
+        ("TAG_ARTICLE_MED_HELP", "Medical Help"),
+        ("TAG_ARTICLE_SERV_TRANSL", "Translation Services"),
+        ("TAG_ARTICLE_SHOPPING_DESTINATION", "Shopping Destination"),
+        ("TAG_ARTICLE_SOUVENIRS", "Souvenirs"),
     )
     tag = models.CharField(choices=TAG_ARTICLE_CHOICES, max_length=100, blank=False)
     review_text = models.TextField()
