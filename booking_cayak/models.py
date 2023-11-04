@@ -5,7 +5,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
-from .constants import BOAT_TYPES
+
+from articles.models import Like
+from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_ARTICLE_CHOICES
 
 
 class BoatType(models.Model):
@@ -28,8 +30,10 @@ class BoatType(models.Model):
                 description=boat_type_data['description'],
                 details=boat_type_data['details']
             )
+
     class Meta:
         verbose_name_plural = "Типи лодок"
+
 
 class Boat(models.Model):
     boat_type = models.ForeignKey(BoatType, on_delete=models.CASCADE, null=True, default=None, verbose_name="Тип лодки")
@@ -59,8 +63,10 @@ class BoatStatus(models.Model):
     ]
 
     boat = models.ForeignKey(Boat, on_delete=models.CASCADE, verbose_name="Лодка")
-    start_time = models.DateTimeField(default=datetime(2022, 2, 24, 4, 0), blank=True, null=True, verbose_name="Час початку")
-    end_time = models.DateTimeField(default=datetime(2022, 2, 24, 6, 0), null=True, blank=True, verbose_name="Час закінчення")
+    start_time = models.DateTimeField(default=datetime(2022, 2, 24, 4, 0), blank=True, null=True,
+                                      verbose_name="Час початку")
+    end_time = models.DateTimeField(default=datetime(2022, 2, 24, 6, 0), null=True, blank=True,
+                                    verbose_name="Час закінчення")
     status = models.CharField(default='F', max_length=1, choices=STATUS_CHOICES, verbose_name="Статус")
 
     def __str__(self):
@@ -71,26 +77,20 @@ class BoatStatus(models.Model):
 
 
 class Price(models.Model):
-    DURATION_CHOICES = [
-        ('30m', '30 хвилин'),
-        ('1h', '1 година'),
-        ('2h', '2 години'),
-        ('3h', '3 години'),
-        ('4h', '4 години'),
-        ('5h', '5 годин'),
-        ('5-7h', '5-7 годин'),
-        ('7-12h', '7-12 годин'),
-        ('24h', '24 години'),
-    ]
+    capacity_1 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (1 особа)",
+                                     blank=True, null=True)
+    capacity_1_label = models.CharField(max_length=100, verbose_name="Надпис (1 особа)",
+                                        default="Ціна за годину (1 особа)")
 
-    capacity_1 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (1 особа)", blank=True, null=True)
-    capacity_1_label = models.CharField(max_length=100, verbose_name="Надпис (1 особа)", default="Ціна за годину (1 особа)")
+    capacity_2 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (2 особи)",
+                                     blank=True, null=True)
+    capacity_2_label = models.CharField(max_length=100, verbose_name="Надпис (2 особи)",
+                                        default="Ціна за годину (2 особи)")
 
-    capacity_2 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (2 особи)", blank=True, null=True)
-    capacity_2_label = models.CharField(max_length=100, verbose_name="Надпис (2 особи)", default="Ціна за годину (2 особи)")
-
-    capacity_3 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (3 особи)", blank=True, null=True)
-    capacity_3_label = models.CharField(max_length=100, verbose_name="Надпис (3 особи)", default="Ціна за годину (3 особи)")
+    capacity_3 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (3 особи)",
+                                     blank=True, null=True)
+    capacity_3_label = models.CharField(max_length=100, verbose_name="Надпис (3 особи)",
+                                        default="Ціна за годину (3 особи)")
 
     price_per_hour = models.DecimalField(max_digits=8, decimal_places=2)
 
@@ -112,7 +112,6 @@ class Price(models.Model):
     class Meta:
         verbose_name_plural = "Ціни:"
 
-
     def get_rental_price(self):
         price = Price.objects.get(boat_type=self.boat_status.boat.boat_type, duration=self.duration)
         return price.price_per_hour * self.duration
@@ -132,34 +131,14 @@ class Price(models.Model):
         return total_price
 
     class Meta:
-         verbose_name_plural = "Бронювання"
+        verbose_name_plural = "Бронювання"
+
 
 class Review(models.Model):
-
     reviewer_name = models.CharField(max_length=255)
     name_service = models.CharField(max_length=255)
-    RATING_CHOICES = (
-        (1, '1 звезда'),
-        (2, '2 звезды'),
-        (3, '3 звезды'),
-        (4, '4 звезды'),
-        (5, '5 звезд'),
-    )
-
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
-    TAG_ARTICLE_CHOICES = (
-        ("TAG_ARTICLE_MOTO_RENT", "Moto Rent"),
-        ("TAG_ARTICLE_MOTO_BEGINNER", "Moto Beginner"),
-        ("TAG_ARTICLE_MOTO_SOS", "Moto SOS"),
-        ("TAG_ARTICLE_RENT_ESTATE", "Rent Estate"),
-        ("TAG_ARTICLE_PUBLIC_SERV", "Public Service"),
-        ("TAG_ARTICLE_LANG_SCHOL", "Language School"),
-        ("TAG_ARTICLE_MED_HELP", "Medical Help"),
-        ("TAG_ARTICLE_SERV_TRANSL", "Translation Services"),
-        ("TAG_ARTICLE_SHOPPING_DESTINATION", "Shopping Destination"),
-        ("TAG_ARTICLE_SOUVENIRS", "Souvenirs"),
-    )
-    tag = models.CharField(choices=TAG_ARTICLE_CHOICES, max_length=100, blank=False)
+    tag = models.ManyToManyField(TAG_ARTICLE_CHOICES)
     review_text = models.TextField()
     wishes = models.TextField(blank=True)
     is_approved = models.BooleanField(default=False)
