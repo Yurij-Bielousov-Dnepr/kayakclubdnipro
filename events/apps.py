@@ -1,5 +1,4 @@
 from django.apps import AppConfig
-from helpySamui.constants import TAG_ARTICLE_CHOICES
 
 
 # class MyAppConfig(AppConfig):

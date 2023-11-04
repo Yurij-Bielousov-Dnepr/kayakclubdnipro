@@ -7,7 +7,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 from articles.models import Like
-from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_ARTICLE_CHOICES
+from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
 
 
 class BoatType(models.Model):
@@ -134,12 +134,17 @@ class Price(models.Model):
         verbose_name_plural = "Бронювання"
 
 
+class Tag(models.Model):
+    code = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
+
+
 class Review(models.Model):
     reviewer_name = models.CharField(max_length=255)
     name_service = models.CharField(max_length=255)
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
-    tag = models.ManyToManyField(TAG_ARTICLE_CHOICES)
-    review_text = models.TextField()
+    tags = models.ManyToManyField(Tag.name, related_name="posts")
+    review_text = models.TextField(max_length=255)
     wishes = models.TextField(blank=True)
     is_approved = models.BooleanField(default=False)
     likes = GenericRelation(Like)
@@ -148,4 +153,4 @@ class Review(models.Model):
         return reverse('like_toggle', args=[self.pk, self.__class__.__name__.lower()])
 
     def __str__(self):
-        return f"Review for {self.helper_name} by {self.reviewer_name}"
+        return f"Відгук від {self.reviewer_name} що використав послугу {self.name_service}"

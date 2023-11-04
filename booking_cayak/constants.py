@@ -25,7 +25,7 @@ DURATION_CHOICES = [
     ('7-12h', '7-12 годин'),
     ('24h', '24 години'),
 ]
-TAG_ARTICLE_CHOICES = (
+TAG_CHOICES = (
     ("RENT_BOAT_1_PASSENGER", "Прокат 1-місних човнів"),
     ("RENT_BOAT_2_PASSENGERS", "Прокат 2-місних човнів"),
     ("RENT_BOAT_3_PASSENGERS", "Прокат 3-місних човнів"),

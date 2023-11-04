@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'crm.apps.CrmConfig',
+    # 'crm.apps.CrmConfig',
 ]
 
 MIDDLEWARE = [
@@ -108,16 +108,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "uk-ua"
 
-TIME_ZONE = "UTC"
-
-USE_I18N = True
-
-USE_TZ = True
+TIME_ZONE = "UTC+2"
 
 
-# Static files (CSS, JavaScript, Images)
+
+USE_TZ = False
+
+
+# Static files (CSS, JavaScript, Images) USE_I18N = True для різних мов
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
