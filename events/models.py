@@ -2,7 +2,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
-# from django.contrib.auth.models import User
+from booking_cayak.models import MyUser
 from booking_cayak.models import Tag
 
 
@@ -25,12 +25,12 @@ class Event(models.Model):
 
 
 
-class Favorites(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    article = models.ForeignKey(
-        Article, on_delete=models.CASCADE, null=True, blank=True
-    )
-    is_favorite = models.BooleanField(default=False)
+# class Favorites(models.Model):
+    #    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    #    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
+    #    article = models.ForeignKey(
+    #        Article, on_delete=models.CASCADE, null=True, blank=True
+    #     )
+    #    is_favorite = models.BooleanField(default=False)
 
 

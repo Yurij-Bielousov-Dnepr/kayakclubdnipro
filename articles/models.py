@@ -5,8 +5,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-
+from booking_cayak.models import Tag
 from django.contrib.contenttypes.models import ContentType
+from booking_cayak.models import MyUser
 
 
 class Article(models.Model):
@@ -15,7 +16,7 @@ class Article(models.Model):
     rating = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     is_favorite = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag_article, verbose_name="Tags",  blank=False)
+    tags = models.ManyToManyField(Tag, verbose_name="Tags",  blank=False)
 
     # def clean(self):
     #     super().clean()

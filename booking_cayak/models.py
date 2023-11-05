@@ -5,9 +5,23 @@ from django.urls import reverse
 from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth.models import User
 from articles.models import Like
 from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
+
+
+class MyUser(User):
+    # Історія бронювань
+    bookings = models.ManyToManyField("bookings.Booking", related_name="users")
+
+    # Вподобані статті
+    liked_articles = models.ManyToManyField("articles.Article", related_name="users")
+
+    # Вподобані події
+    liked_events = models.ManyToManyField("events.Event", related_name="users")
+
+    # Відгуки, які написав користувач
+    reviews = models.ManyToManyField("reviews.Review", related_name="users")
 
 
 class BoatType(models.Model):
