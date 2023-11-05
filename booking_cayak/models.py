@@ -143,7 +143,7 @@ class Review(models.Model):
     reviewer_name = models.CharField(max_length=255)
     name_service = models.CharField(max_length=255)
     rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
-    tags = models.ManyToManyField(Tag.name, related_name="posts")
+    tags = models.ManyToManyField(Tag, related_name="reviews")
     review_text = models.TextField(max_length=255)
     wishes = models.TextField(blank=True)
     is_approved = models.BooleanField(default=False)

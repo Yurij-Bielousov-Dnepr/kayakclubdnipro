@@ -14,7 +14,7 @@ class Event(models.Model):
     rating = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     is_favorite = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag_article, verbose_name="Tags", blank=False)
+    tags = models.ManyToManyField(Tag, related_name="reviews")
 
     # def clean(self):
     #     super().clean()
