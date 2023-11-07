@@ -1,12 +1,10 @@
 from datetime import datetime
-
 from django.contrib.contenttypes.fields import GenericRelation
 from django.urls import reverse
 from django.utils import timezone
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from articles.models import Like
 from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
 
 
@@ -148,23 +146,3 @@ class Price(models.Model):
         verbose_name_plural = "Бронювання"
 
 
-class Tag(models.Model):
-    code = models.CharField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
-
-
-class Review(models.Model):
-    reviewer_name = models.CharField(max_length=255)
-    name_service = models.CharField(max_length=255)
-    rating = models.PositiveSmallIntegerField(choices=RATING_CHOICES)
-    tags = models.ManyToManyField(Tag, related_name="reviews")
-    review_text = models.TextField(max_length=255)
-    wishes = models.TextField(blank=True)
-    is_approved = models.BooleanField(default=False)
-    likes = GenericRelation(Like)
-
-    def get_like_url(self):
-        return reverse('like_toggle', args=[self.pk, self.__class__.__name__.lower()])
-
-    def __str__(self):
-        return f"Відгук від {self.reviewer_name} що використав послугу {self.name_service}"
