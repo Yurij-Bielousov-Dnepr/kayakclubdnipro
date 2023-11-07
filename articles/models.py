@@ -16,7 +16,7 @@ class Article(models.Model):
     rating = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     is_favorite = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag, verbose_name="Tags",  blank=False)
+    tags = models.ManyToManyField(Tag, verbose_name="Tags",  blank=False, related_name="Tags")
 
     # def clean(self):
     #     super().clean()
