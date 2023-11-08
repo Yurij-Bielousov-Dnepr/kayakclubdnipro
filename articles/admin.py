@@ -1,11 +1,11 @@
 from django.contrib import admin
-from articles.models import ReviewHelper, ReviewArt_Event
+from crm.models import Review, Event, Article
 
 
-@admin.register(ReviewArt_Event)
-class ReviewArtEventAdmin(admin.ModelAdmin):
-    pass
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'rating', 'is_approved')
+    list_filter = ('is_approved',)
+    search_fields = ('title', 'tags__name')
 
-@admin.register(ReviewHelper)
-class ReviewHelperAdmin(admin.ModelAdmin):
-    pass
+

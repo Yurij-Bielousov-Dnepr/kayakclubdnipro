@@ -51,6 +51,7 @@ class Tag(models.Model):
     code = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
 
+
 class Article(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -101,9 +102,6 @@ class Favorite(models.Model):
         "contenttypes.ContentType", on_delete=models.CASCADE
     )
     object_id = models.PositiveIntegerField()
-    content_object = models.GenericForeignKey(
-        "contenttypes.ContentType", for_concrete_model=True
-    )
     is_favorite = models.BooleanField(default=False)
 
     class Meta:
@@ -111,7 +109,7 @@ class Favorite(models.Model):
         verbose_name_plural = "Вподобання"
 
     def __str__(self):
-        return f"{self.user} - {self.content_object}"
+        return f"{self.user} - {self.content_type} - {self.object_id}"
 
 
 class Review(models.Model):

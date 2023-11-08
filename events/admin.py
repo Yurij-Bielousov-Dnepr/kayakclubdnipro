@@ -1,5 +1,5 @@
 from django.contrib import admin
-from crm.models import Article, Event, Tag, Review
+from crm.models import Article, Event, Tag, Review, Favorite
 
 
 #    from .models import Favorites,
@@ -22,9 +22,10 @@ from crm.models import Article, Event, Tag, Review
 #         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 @admin.register(Tag)
-class TagArticleAdmin(admin.ModelAdmin):
+class TagAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     ordering = ('name',)
+
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -32,11 +33,6 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ('is_approved',)
     search_fields = ('title', 'location', 'tags__name')
 
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'rating', 'is_approved')
-    list_filter = ('is_approved',)
-    search_fields = ('title', 'tags__name')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
@@ -44,7 +40,8 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ('rating', 'relevance', 'engagement')
     search_fields = ('article__title', 'reviewer_name')
 
-@admin.register(Favorites)
+
+@admin.register(Favorite)
 class FavoritesAdmin(admin.ModelAdmin):
     pass
 

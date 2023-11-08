@@ -9,12 +9,10 @@ urlpatterns = [
     path("", RedirectView.as_view(pattern_name="helpy:index", permanent=False)),
 
     path("admin/", admin.site.urls),
-    path("helpy/", include("helpy.urls")),
-    path("offer/", include("offer.urls")),
+    path("crm/", include("crm.urls")),
+    path("events/", include("events.urls")),
     path("reviews/", include("reviews.urls")),
-    path("accounts/", include("allauth.urls")),
-    path("art_event/", include("art_event.urls")),
-    path("accounts/", include("accounts.urls")),
+    path("articles/", include("articles.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # \
 #    \
