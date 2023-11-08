@@ -8,20 +8,6 @@ from django.contrib.auth.models import User
 from .constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
 
 
-class MyUser(User):
-    # Історія бронювань
-    bookings = models.ManyToManyField("bookings.Booking", related_name="users")
-
-    # Вподобані статті
-    liked_articles = models.ManyToManyField("articles.Article", related_name="users")
-
-    # Вподобані події
-    liked_events = models.ManyToManyField("events.Event", related_name="users")
-
-    # Відгуки, які написав користувач
-    reviews = models.ManyToManyField("reviews.Review", related_name="users")
-
-
 class BoatType(models.Model):
     type_name = models.CharField(max_length=100, verbose_name='Назва типу')
     quantity = models.PositiveIntegerField(verbose_name='Кількість', default=1)

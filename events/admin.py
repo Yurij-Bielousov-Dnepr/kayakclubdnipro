@@ -1,11 +1,13 @@
 from django.contrib import admin
-from events.models import Article, Event, Favorites
-from .models import Tag_article
+from crm.models import Article, Event, Tag, Review
+
+
+#    from .models import Favorites,
 
 
 # @admin.register(Article)
 # class ArticleAdmin(admin.ModelAdmin):
-#     pass
+
 #     def formfield_for_manytomany(self, db_field, request, **kwargs):
 #         if db_field.name == 'tags':
 #             kwargs['queryset'] = Tag_article.objects.all().order_by('name')
@@ -18,10 +20,8 @@ from .models import Tag_article
 #         if db_field.name == 'tags':
 #             kwargs['queryset'] = Tag_article.objects.all().order_by('name')
 #         return super().formfield_for_manytomany(db_field, request, **kwargs)
-from django.utils.translation import gettext_lazy as _
-from events.models import Tag_article, Event, Article, Review
 
-@admin.register(Tag_article)
+@admin.register(Tag)
 class TagArticleAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     ordering = ('name',)

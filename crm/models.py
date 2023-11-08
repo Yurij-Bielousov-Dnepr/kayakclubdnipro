@@ -1,9 +1,41 @@
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from booking_cayak.constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
-from booking_cayak.models import MyUser
+
+
+
+
+class MyUser(User):
+    # Історія бронювань
+    bookings = models.ManyToManyField(
+        "bookings.Booking",
+        related_name="users",
+        verbose_name="Історія бронювань",
+    )
+
+    # Вподобані статті
+    liked_articles = models.ManyToManyField(
+        "articles.Article",
+        related_name="users",
+        verbose_name="Вподобані статті",
+    )
+
+    # Вподобані події
+    liked_events = models.ManyToManyField(
+        "events.Event",
+        related_name="users",
+        verbose_name="Вподобані події",
+    )
+
+    # Відгуки, які написав користувач
+    reviews = models.ManyToManyField(
+        "reviews.Review",
+        related_name="users",
+        verbose_name="Відгуки, які написав користувач",
+    )
 
 
 class BookingHistory(models.Model):
@@ -13,6 +45,11 @@ class BookingHistory(models.Model):
     User_History = models.ForeignKey(MyUser, on_delete=models.CASCADE, verbose_name="Користувач")
     start_time = models.DateTimeField(verbose_name="Час початку")
     end_time = models.DateTimeField(verbose_name="Час закінчення")
+
+
+class Tag(models.Model):
+    code = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
@@ -38,7 +75,6 @@ class Like(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-
 class Event(models.Model):
     title = models.CharField(max_length=55)
     description = models.CharField(max_length=255)
@@ -57,20 +93,25 @@ class Event(models.Model):
     #
 
 
+class Favorite(models.Model):
+    """Модель для зберігання вподобань користувача."""
 
-# class Favorites(models.Model):
-    #    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    #    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-    #    article = models.ForeignKey(
-    #        Article, on_delete=models.CASCADE, null=True, blank=True
-    #     )
-    #    is_favorite = models.BooleanField(default=False)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(
+        "contenttypes.ContentType", on_delete=models.CASCADE
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = models.GenericForeignKey(
+        "contenttypes.ContentType", for_concrete_model=True
+    )
+    is_favorite = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "Вподобання"
+        verbose_name_plural = "Вподобання"
 
-
-class Tag(models.Model):
-    code = models.CharField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
+    def __str__(self):
+        return f"{self.user} - {self.content_object}"
 
 
 class Review(models.Model):
