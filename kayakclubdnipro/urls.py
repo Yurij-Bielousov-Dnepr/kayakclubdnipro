@@ -23,12 +23,14 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("crm/", include("crm.urls")),
     path("events/", include("events.urls")),
-    path("articles/", include("articles.urls")),
+    # path("articles/", include("articles.urls")),
     path("about", RedirectView.as_view(pattern_name="about", permanent=False)),
-
-path("admin/", admin.site.urls),
-    path("crm/", include("crm.urls")),
-    path("events/", include("events.urls")),
-    path("reviews/", include("reviews.urls")),
-    path("articles/", include("articles.urls")),
 ]
+
+#
+# path("admin/", admin.site.urls),
+#     path("crm/", include("crm.urls")),
+#     path("events/", include("events.urls")),
+#     path("reviews/", include("reviews.urls")),
+#     path("articles/", include("articles.urls")),
+
