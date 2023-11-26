@@ -20,7 +20,103 @@ urlpatterns = [
 Коментар: Повертає список всіх бронювань
 /crm/booking/search
 Коментар: Повертає список бронювань, які відповідають заданим критеріям пошуку
+from django.urls import path
 
+from booking.views import (
+    BookingCreateView,
+    BookingCancelView,
+    BookingUpdateView,
+    BookingView,
+    BookingList,
+    BookingSearch,
+)
+
+urlpatterns = [
+    # **Основні URL-адреси**
+
+    # **Створення броні**
+    path(
+        "create/",
+        BookingCreateView.as_view(),
+        name="booking-create",
+        # **Коментар:** Створює нову бронь
+        # **Заголовок:** Створення броні
+    ),
+
+    # **Скасування броні**
+    path(
+        "cancel/<int:id>/",
+        BookingCancelView.as_view(),
+        name="booking-cancel",
+        # **Коментар:** Скасовує бронь з ідентифікатором <id>
+        # **Заголовок:** Скасування броні
+    ),
+
+    # **Зміна бронювання**
+    path(
+        "update/<int:id>/",
+        BookingUpdateView.as_view(),
+        name="booking-update",
+        # **Коментар:** Змінює бронювання з ідентифікатором <id>
+        # **Заголовок:** Редагування броні
+    ),
+
+    # **Перегляд бронювання**
+    path(
+        "view/<int:id>/",
+        BookingView.as_view(),
+        name="booking-view",
+        # **Коментар:** Переглядає бронювання з ідентифікатором <id>
+        # **Заголовок:** Перегляд броні
+    ),
+
+    # **Список бронювань**
+    path(
+        "list/",
+        BookingList.as_view(),
+        name="booking-list",
+        # **Коментар:** Повертає список всіх бронювань
+        # **Заголовок:** Список бронювань
+    ),
+
+    # **Пошук бронювань**
+    path(
+        "search/",
+        BookingSearch.as_view(),
+        name="booking-search",
+        # **Коментар:** Повертає список бронювань, які відповідають заданим критеріям пошуку
+        # **Заголовок:** Пошук бронювань
+    ),
+
+    # **Додаткові URL-адреси**
+
+    # **Список бронювань за датою**
+    path(
+        "date/<date>/",
+        BookingList.as_view(),
+        name="booking-list-by-date",
+        # **Коментар:** Повертає список бронювань, датованих `<date>`
+        # **Заголовок:** Список бронювань за датою
+    ),
+
+    # **Список бронювань за клієнтом**
+    path(
+        "client/<int:id>/",
+        BookingList.as_view(),
+        name="booking-list-by-client",
+        # **Коментар:** Повертає список бронювань клієнта з ідентифікатором `<id>`
+        # **Заголовок:** Список бронювань за клієнтом
+    ),
+
+    # **Список бронювань за товаром**
+    path(
+        "product/<int:id>/",
+        BookingList.as_view(),
+        name="booking-list-by-product",
+        # **Коментар:** Повертає список бронювань товару з ідентифікатором `<id>`
+        # **Заголовок:** Список бронювань за товаром
+    ),
+]
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # \
 #    \
