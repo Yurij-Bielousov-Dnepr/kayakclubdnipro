@@ -7,12 +7,20 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="helpy:index", permanent=False)),
+        /crm/booking/create
+Коментар: Забронювати: Створює нову бронь
+    /crm/booking/cancel/<id>
+Коментар: Скасовує бронь з ідентифікатором <id>
 
-    path("admin/", admin.site.urls),
-    path("crm/", include("crm.urls")),
-    path("events/", include("events.urls")),
-    path("reviews/", include("reviews.urls")),
-    path("articles/", include("articles.urls")),
+/crm/booking/update/<id>
+Коментар: Змінює бронь з ідентифікатором <id>
+/crm/booking/view/<id>
+Коментар: Переглядає бронь з ідентифікатором <id>
+/crm/booking/list
+Коментар: Повертає список всіх бронювань
+/crm/booking/search
+Коментар: Повертає список бронювань, які відповідають заданим критеріям пошуку
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 # \
 #    \

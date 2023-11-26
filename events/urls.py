@@ -17,14 +17,6 @@ app_name = "art_event"  # добавьте это, если использует
 
 
 urlpatterns = [
-    path("articles/", views.ArticleListView.as_view(), name="articles"),
-    path("articles/add/", views.add_article, name="add_article"),
-    path(
-        "articles/<int:pk>/update/",
-        views.ArticleUpdateView.as_view(),
-        name="update_article",
-    ),
-    path("events/", views.events, name="events"),
     path('events/<int:pk>/', Events_detail.as_view(), name='event_detail'),
     path("events/add/", views.EventCreateView.as_view(), name="add_event"),
     path(
