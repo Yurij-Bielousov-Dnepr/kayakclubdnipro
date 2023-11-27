@@ -3,6 +3,18 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic import RedirectView
+from views import (
+    BookingCreateView,
+    BookingCancelView,
+    BookingUpdateView,
+    BookingView,
+    BookingList,
+    BookingSearch,
+)
+
+
+class RedirectView:
+    pass
 
 
 urlpatterns = [
@@ -20,16 +32,7 @@ urlpatterns = [
 Коментар: Повертає список всіх бронювань
 /crm/booking/search
 Коментар: Повертає список бронювань, які відповідають заданим критеріям пошуку
-from django.urls import path
 
-from booking.views import (
-    BookingCreateView,
-    BookingCancelView,
-    BookingUpdateView,
-    BookingView,
-    BookingList,
-    BookingSearch,
-)
 
 urlpatterns = [
     # **Основні URL-адреси**
