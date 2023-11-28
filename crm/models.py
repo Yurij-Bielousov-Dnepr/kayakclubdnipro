@@ -38,6 +38,18 @@ class MyUser(User):
     )
 
 
+class Booking(models.Model):
+    date = models.DateField()
+    time = models.TimeField()
+    client = models.ForeignKey('MyUser.Client', on_delete=models.CASCADE)
+    product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
+    is_confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Бронювання'
+        verbose_name_plural = 'Бронювання'
+
+
 class BookingHistory(models.Model):
     status = models.CharField(max_length=1, choices=[('C', 'В обробці'), ('B', 'Затверджено'), ('R', 'Відхилено')],
                               verbose_name="Статус бронювання")
@@ -52,13 +64,13 @@ class Tag(models.Model):
     name = models.CharField(max_length=255)
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    rating = models.IntegerField(default=0)
-    is_approved = models.BooleanField(default=False)
-    is_favorite = models.BooleanField(default=False)
-    tags = models.ManyToManyField(Tag, verbose_name="Tags",  blank=False, related_name="Tags")
+# class Article(models.Model):
+#     title = models.CharField(max_length=255)
+#     content = models.TextField()
+#     rating = models.IntegerField(default=0)
+#     is_approved = models.BooleanField(default=False)
+#     is_favorite = models.BooleanField(default=False)
+#     tags = models.ManyToManyField(Tag, verbose_name="Tags",  blank=False, related_name="Tags")
 
     # def clean(self):
     #     super().clean()

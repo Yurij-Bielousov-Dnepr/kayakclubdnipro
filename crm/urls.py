@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.views.generic import RedirectView
-from views import ( BookingCreateView, BookingCancelView, BookingUpdateView, BookingView, BookingList, BookingSearch,)
+from .views import (BookingCreateView, BookingCancelView, BookingUpdateView, BookingView, BookingList, BookingSearch,)
 
 
 urlpatterns = [

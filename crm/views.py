@@ -5,7 +5,7 @@ from .models import Booking
 
 class BookingCreateView(CreateView):
     model = Booking
-    template_name = 'booking/create.html'
+    template_name = 'crm/create.html'
     fields = ['date', 'time', 'client', 'product', 'is_confirmed']
 
     def get_success_url(self):
@@ -13,12 +13,12 @@ class BookingCreateView(CreateView):
 
 class BookingCancelView(DeleteView):
     model = Booking
-    template_name = 'booking/cancel.html'
+    template_name = 'crm/cancel.html'
     success_url = '/crm/booking/list'
 
 class BookingUpdateView(UpdateView):
     model = Booking
-    template_name = 'booking/update.html'
+    template_name = 'crm/update.html'
     fields = ['date', 'time', 'client', 'product', 'is_confirmed']
 
     def get_success_url(self):
@@ -26,11 +26,11 @@ class BookingUpdateView(UpdateView):
 
 class BookingView(DetailView):
     model = Booking
-    template_name = 'booking/view.html'
+    template_name = 'crm/view.html'
 
 class BookingList(ListView):
     model = Booking
-    template_name = 'booking/list.html'
+    template_name = 'crm/list.html'
 
     def get_queryset(self):
         queryset = Booking.objects.all()
@@ -49,7 +49,7 @@ class BookingList(ListView):
 
 class BookingSearch(ListView):
     model = Booking
-    template_name = 'booking/search.html'
+    template_name = 'crm/search.html'
 
     def get_queryset(self):
         queryset = Booking.objects.all()
