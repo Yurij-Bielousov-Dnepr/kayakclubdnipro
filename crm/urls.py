@@ -13,9 +13,6 @@ from views import (
 )
 
 
-class RedirectView:
-    pass
-
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="helpy:index", permanent=False)),
