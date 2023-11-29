@@ -4,6 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from booking_cayak.constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
+from booking_cayak.models import BoatStatus, Boat
 
 
 
