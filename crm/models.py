@@ -7,8 +7,6 @@ from booking_cayak.constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES
 from booking_cayak.models import BoatStatus, Boat
 
 
-
-
 class MyUser(User):
     # Історія бронювань
     bookings = models.ManyToManyField(
@@ -43,7 +41,7 @@ class Booking(models.Model):
     date = models.DateField()
     time = models.TimeField()
     client = models.ForeignKey('MyUser.Client', on_delete=models.CASCADE)
-    product = models.ForeignKey('product.Product', on_delete=models.CASCADE)
+    BookingBoat = models.ForeignKey('BookingBoat.Boat', on_delete=models.CASCADE)
     is_confirmed = models.BooleanField(default=False)
 
     class Meta:
