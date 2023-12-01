@@ -48,7 +48,10 @@ class Booking(models.Model):
         verbose_name = 'Бронювання'
         verbose_name_plural = 'Бронювання'
 
-
+# Бронюваннялієнт/орендувач
+# Тип ПЗ
+# Ціну оренди обраного ПЗ
+# Обрати пільгу: ДР,
 class BookingHistory(models.Model):
     status = models.CharField(max_length=1, choices=[('C', 'В обробці'), ('B', 'Затверджено'), ('R', 'Відхилено')],
                               verbose_name="Статус бронювання")
