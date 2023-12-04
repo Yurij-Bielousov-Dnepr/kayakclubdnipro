@@ -43,11 +43,36 @@ class Booking(models.Model):
     client = models.ForeignKey('MyUser.Client', on_delete=models.CASCADE)
     BookingBoat = models.ForeignKey('BookingBoat.Boat', on_delete=models.CASCADE)
     is_confirmed = models.BooleanField(default=False)
+    from django.db import models
 
-    class Meta:
-        verbose_name = 'Бронювання'
-        verbose_name_plural = 'Бронювання'
+    class Booking(models.Model):
+        # 1 Бронюваннялієнт/орендувач
+        client = models.ForeignKey('client.Client', on_delete=models.CASCADE)
 
+        # 2 Тип ПЗ
+        product_type = models.CharField(max_length=255)
+
+        # 3 Ціну оренди обраного ПЗ
+        price = models.DecimalField(max_digits=10, decimal_places=2)
+
+        # 4 Колл ПЗ
+        quantity = models.IntegerField()
+
+        # 5 Обрати пільгу: ДР,
+        discount = models.BooleanField(default=False)
+
+        # 6 Цена итого
+        total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+        # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
+        order_info = models.TextField()
+
+        class Meta:
+            verbose_name = 'Бронювання'
+            verbose_name_plural = 'Бронювання'
+
+        def __str__(self):
+            return f"Бронювання {self.id}"
 # Уточнить поля модели  Бронирования
 # 1 Бронюваннялієнт/орендувач
 # 2 Тип ПЗ
@@ -55,7 +80,7 @@ class Booking(models.Model):
 # 4 Колл ПЗ
 # 5 Обрати пільгу: ДР,
 # 6 Цена итого
-# 7 Инфа в коммент
+# 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
 class BookingHistory(models.Model):
     status = models.CharField(max_length=1, choices=[('C', 'В обробці'), ('B', 'Затверджено'), ('R', 'Відхилено')],
                               verbose_name="Статус бронювання")
