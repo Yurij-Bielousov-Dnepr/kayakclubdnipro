@@ -73,10 +73,9 @@ class BoatStatus(models.Model):
     class Meta:
         verbose_name_plural = "Статус лодок"
 
-
 class Price(models.Model):
     capacity_1 = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Ціна за годину (1 особа)",
-                                     blank=True, null=True)
+                                 blank=True, null=True)
     capacity_1_label = models.CharField(max_length=100, verbose_name="Надпис (1 особа)",
                                         default="Ціна за годину (1 особа)")
 
@@ -101,7 +100,7 @@ class Price(models.Model):
             return self.capacity_2
         elif capacity == 3:
             return self.capacity_3
-        # Додайте аналогічні умови для решти колонок
+        # Add similar conditions for the remaining columns
         return None
 
     def __str__(self):
@@ -119,11 +118,11 @@ class Price(models.Model):
     def calculate_total_price(self):
         price = Price.objects.get(boat_type=self.boat_status.boat.boat_type, duration=self.duration)
         total_price = price.price_per_hour * self.duration
-        if self.discount == 'DR':
+        if self.discount == 'ДР':
             total_price -= total_price * 0.1
-        elif self.discount == 'SOU':
+        elif self.discount == 'СОУ':
             total_price -= price.price_per_hour
-        elif self.discount == 'Volunteer' or self.discount == 'Refugee':
+        elif self.discount in ['Волонтер', 'Переселенці']:
             discount_amount = min(total_price * 0.5, price.price_per_hour * 2)
             total_price -= discount_amount
         return total_price

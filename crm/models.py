@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
 from booking_cayak.constants import BOAT_TYPES, RATING_CHOICES, DURATION_CHOICES, TAG_CHOICES
-from booking_cayak.models import BoatStatus, Boat
+from booking_cayak.models import BoatStatus, Boat, Price, BoatType
 
 
 class MyUser(User):
@@ -44,18 +44,14 @@ class Booking(models.Model):
     BookingBoat = models.ForeignKey('BookingBoat.Boat', on_delete=models.CASCADE)
     is_confirmed = models.BooleanField(default=False)
     from django.db import models
-
-    class Booking(models.Model):
+class Booking(models.Model):
         # 1 Бронюваннялієнт/орендувач
         client = models.ForeignKey('client.Client', on_delete=models.CASCADE)
 
-        # 2 Тип ПЗ
-        product_type = models.CharField(max_length=255)
+        # 2 Тип човна
+        boat_type = models.ForeignKey(BoatType, on_delete=models.CASCADE)
 
-        # 3 Ціну оренди обраного ПЗ
-        price = models.DecimalField(max_digits=10, decimal_places=2)
-
-        # 4 Колл ПЗ
+        # 4 Колл човна
         quantity = models.IntegerField()
 
         # 5 Обрати пільгу: ДР,
@@ -65,14 +61,57 @@ class Booking(models.Model):
         total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
         # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
-        order_info = models.TextField()
+        order_info = models.TextField(blank=True)
 
-        class Meta:
+        # 8 Додати поле Boat
+        boat = models.ForeignKey(Boat, on_delete=models.CASCADE)
+
+        # 9 Додати поле BoatStatus
+        boat_status = models.ForeignKey(BoatStatus, on_delete=models.CASCADE)
+
+        # 10 Додати поле Price
+        price_id = models.ForeignKey(Price, on_delete=models.CASCADE)
+
+        # 11 Добавить поле сумма_скидки
+        discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+        # 12 Добавить поле название_скидки
+        discount_type = models.CharField(max_length=255, choices=[
+            ('ДР', 'День народження'),
+            ('СОУ', 'Учасник СОУ'),
+            ('переселенці', 'Переселенці'),
+            ('волонтер', 'Волонтер'),
+            ('корпоративне замовлення', 'Корпоративне замовлення'),
+        ])
+
+    class Meta:
             verbose_name = 'Бронювання'
             verbose_name_plural = 'Бронювання'
 
-        def __str__(self):
-            return f"Бронювання {self.id}"
+    def __str__(self):
+        return f"Бронювання {self.id}"
+
+    def get_order_info(self):
+            order_info = ""
+            order_info += f"{self.client} {self.quantity} {self.boat_type} {self.total_price} {self.discount_amount}"
+            return order_info
+
+    def calculate_discount_amount(self):
+        if self.discount:
+            if self.discount_type == "ДР":
+                self.discount_amount = self.total_price * 0.1
+            elif self.discount_type == "СОУ":
+                self.discount_amount = self.total_price * 0
+            elif self.discount_type in ['переселенці', 'волонтер']:
+                self.discount_amount = self.total_price * 0.5
+            elif self.discount_type == 'корпоративне замовлення':
+                self.discount_amount = self.total_price * 0.25
+            else:
+                self.discount_amount = 0
+
+    def save(self, **kwargs):
+        self.calculate_discount_amount()
+        super().save(**kwargs)
 # Уточнить поля модели  Бронирования
 # 1 Бронюваннялієнт/орендувач
 # 2 Тип ПЗ
