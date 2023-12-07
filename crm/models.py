@@ -38,43 +38,27 @@ class MyUser(User):
 
 
 class Booking(models.Model):
-    date = models.DateField()
-    time = models.TimeField()
-    client = models.ForeignKey('MyUser.Client', on_delete=models.CASCADE)
-    BookingBoat = models.ForeignKey('BookingBoat.Boat', on_delete=models.CASCADE)
-    is_confirmed = models.BooleanField(default=False)
-    from django.db import models
-class Booking(models.Model):
         # 1 Бронюваннялієнт/орендувач
         client = models.ForeignKey('client.Client', on_delete=models.CASCADE)
-
         # 2 Тип човна
         boat_type = models.ForeignKey(BoatType, on_delete=models.CASCADE)
-
         # 4 Колл човна
         quantity = models.IntegerField()
-
         # 5 Обрати пільгу: ДР,
         discount = models.BooleanField(default=False)
-
         # 6 Цена итого
         total_price = models.DecimalField(max_digits=10, decimal_places=2)
-
         # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
         order_info = models.TextField(blank=True)
-
-        # 8 Додати поле Boat
+       # 8 Додати поле Boat
         boat = models.ForeignKey(Boat, on_delete=models.CASCADE)
-
         # 9 Додати поле BoatStatus
         boat_status = models.ForeignKey(BoatStatus, on_delete=models.CASCADE)
-
         # 10 Додати поле Price
         price_id = models.ForeignKey(Price, on_delete=models.CASCADE)
-
         # 11 Добавить поле сумма_скидки
         discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-
+        is_confirmed = models.BooleanField(default=False)
         # 12 Добавить поле название_скидки
         discount_type = models.CharField(max_length=255, choices=[
             ('ДР', 'День народження'),
