@@ -38,35 +38,47 @@ class MyUser(User):
 
 
 class Booking(models.Model):
-        # 1 Бронюваннялієнт/орендувач
-        client = models.ForeignKey('client.Client', on_delete=models.CASCADE)
-        # 2 Тип човна
-        boat_type = models.ForeignKey(BoatType, on_delete=models.CASCADE)
-        # 4 Колл човна
-        quantity = models.IntegerField()
-        # 5 Обрати пільгу: ДР,
-        discount = models.BooleanField(default=False)
-        # 6 Цена итого
-        total_price = models.DecimalField(max_digits=10, decimal_places=2)
-        # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
-        order_info = models.TextField(blank=True)
-       # 8 Додати поле Boat
-        boat = models.ForeignKey(Boat, on_delete=models.CASCADE)
-        # 9 Додати поле BoatStatus
-        boat_status = models.ForeignKey(BoatStatus, on_delete=models.CASCADE)
-        # 10 Додати поле Price
-        price_id = models.ForeignKey(Price, on_delete=models.CASCADE)
-        # 11 Добавить поле сумма_скидки
-        discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-        is_confirmed = models.BooleanField(default=False)
-        # 12 Добавить поле название_скидки
-        discount_type = models.CharField(max_length=255, choices=[
-            ('ДР', 'День народження'),
-            ('СОУ', 'Учасник СОУ'),
-            ('переселенці', 'Переселенці'),
-            ('волонтер', 'Волонтер'),
-            ('корпоративне замовлення', 'Корпоративне замовлення'),
-        ])
+    # 1 Бронюваннялієнт/орендувач
+    client = models.ForeignKey('client.Client', on_delete=models.CASCADE)
+
+    # 8 Додати поле Boat
+    boat = models.ForeignKey(Boat, on_delete=models.CASCADE)
+
+    # 9 Додати поле BoatStatus
+    boat_status = models.ForeignKey(BoatStatus, on_delete=models.CASCADE)
+
+    # 10 Додати поле Price
+    price = models.ForeignKey(Price, on_delete=models.CASCADE)
+
+    # 11 Добавить поле сумма_скидки
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    # 12 Добавить поле название_скидки
+    discount_type = models.CharField(max_length=255, choices=[
+        ('ДР', 'День народження'),
+        ('СОУ', 'Учасник СОУ'),
+        ('переселенці', 'Переселенці'),
+        ('волонтер', 'Волонтер'),
+        ('корпоративне замовлення', 'Корпоративне замовлення'),
+    ])
+
+    # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
+    order_info = models.TextField(blank=True)
+
+    # 13 Добавить поле статус
+    status = models.CharField(max_length=2, choices=[
+        ('F', 'Вільний'),
+        ('C', 'В обробці'),
+        ('B', 'Зайнятий'),
+        ('H', 'Недоступний до бронювання'),
+    ], default='F')
+
+    class Meta:
+        verbose_name = 'Бронювання'
+        verbose_name_plural = 'Бронювання'
+
+    def __str__(self):
+        return f"Бронювання: {self.id}"
 
     class Meta:
             verbose_name = 'Бронювання'
@@ -88,10 +100,11 @@ class Booking(models.Model):
                 self.discount_amount = self.total_price * 0
             elif self.discount_type in ['переселенці', 'волонтер']:
                 self.discount_amount = self.total_price * 0.5
-            elif self.discount_type == 'корпоративне замовлення':
-                self.discount_amount = self.total_price * 0.25
             else:
                 self.discount_amount = 0
+                #        Обрати пільгу: ДР, СОУ, переселенець, волонтер або корпоративне замовлення
+             # ДР = 10 % знижка від суми оренди ПЗ
+             #Учасник СОУ - 1 година безкоштовно Волонтер/переселенці - 50% знижка від суми оренди (але не більше двох годин оренди)
 
     def save(self, **kwargs):
         self.calculate_discount_amount()
