@@ -98,8 +98,25 @@ class Booking(models.Model):
                 self.discount_amount = self.total_price * 0.1
             elif self.discount_type == "СОУ":
                 self.discount_amount = self.total_price * 0
-            elif self.discount_type in ['переселенці', 'волонтер']:
-                self.discount_amount = self.total_price * 0.5
+                if self.discount_type in ['переселенці', 'волонтер'] and hours <= 2:
+                    self.discount_amount = self.price.price_per_hour * 2
+                else:
+                    if self.discount_type in ['переселенці', 'волонтер']:
+                        # Отримати тривалість бронювання в годинах
+                        hours = self.duration / 60
+
+                        # Якщо тривалість бронювання не перевищує двох годин,
+                        if hours <= 2:
+                            # Призначити знижку в розмірі вартості двох годин оренди
+                            self.discount_amount = self.price.price_per_hour * 2
+                        # Якщо тривалість бронювання перевищує дві години,
+                        else:
+                            # Призначити знижку в розмірі вартості двох годин оренди
+                            self.discount_amount = self.price.price_per_hour * 2
+                            # Вирахувати вартість наступних годин без знижки
+                            additional_cost = (hours - 2) * self.price.price_per_hour
+                            # Додати вартість наступних годин до загальної вартості бронювання
+                            self.total_price += additional_cost
             else:
                 self.discount_amount = 0
                 #        Обрати пільгу: ДР, СОУ, переселенець, волонтер або корпоративне замовлення
