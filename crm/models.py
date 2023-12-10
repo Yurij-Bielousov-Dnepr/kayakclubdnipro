@@ -98,11 +98,11 @@ class Booking(models.Model):
                 self.discount_amount = self.total_price * 0.1
             elif self.discount_type == "СОУ":
                 self.discount_amount = self.total_price * 0
-                if self.discount_type in ['переселенці', 'волонтер'] and hours <= 2:
+                if self.discount_type in ['переселенці', 'волонтер'] and self.hours <= 2:
                     self.discount_amount = self.price.price_per_hour * 2
                 else:
                     if self.discount_type in ['переселенці', 'волонтер']:
-                        # Отримати тривалість бронювання в годинах
+                        # Отримати тривалість бронювання в годинах self.hours разобраться
                         hours = self.duration / 60
 
                         # Якщо тривалість бронювання не перевищує двох годин,
