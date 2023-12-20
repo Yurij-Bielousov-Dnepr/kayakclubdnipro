@@ -27,7 +27,39 @@
     безумовний перехід на сторінку Наші Заходи
 <button onclick="window.location.href='/assortment.html'">Виїздні походи з наметами:</button> 
     безумовний перехід на сторінку Маршрути
-Корпоративні заходи та свята: Дізнатися подробиці та замовити індивідуальну програму</h3>
+Корпоративні заходи та свята: Дізнатися подробиці та замовити індивідуальну програму
+<a href="#" id="corporate-events-link">
+  Корпоративні заходи та свята:
+</a>
+
+<div id="corporate-events-tooltip" style="display: none;">
+  Дізнатися подробиці та замовити індивідуальну програму
+</div>
+    <Script>
+$(document).ready(function() {
+  $("#corporate-events-link").hover(function() {
+    $("#corporate-events-tooltip").show();
+  }, function() {
+    $("#corporate-events-tooltip").hide();
+  });
+
+  $("#corporate-events-link").click(function(e) {
+    e.preventDefault();
+
+    // Тут відкриваємо окреме віконце з текстом
+
+    var popup = window.open("", "Corporate Events", "width=400,height=300");
+    popup.document.write("<h1>Корпоративні заходи та свята</h1>");
+    popup.document.write("<p>Дізнатися подробиці та замовити індивідуальну програму</p>");
+
+    // Закриття віконця
+
+    $(popup).on("beforeunload", function() {
+      $("#corporate-events-tooltip").hide();
+    });
+  });
+});
+</Script>
 <h3> Наша мета -Дарувати Вам дух пригоди!
 </h3>
 <h3>Каяк Клуб Дніпро - До зустрічі в клубі!
