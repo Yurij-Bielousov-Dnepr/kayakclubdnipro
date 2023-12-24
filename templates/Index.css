@@ -12,3 +12,12 @@
   border-radius: 5px;
   display: none;
 }
+ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+ul li {
+      margin-bottom: 5px;
+    }
