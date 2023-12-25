@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DeleteView, UpdateView, ListView, DetailView
 from .models import Booking
+from django.db.models import Q
+
 
 class BookingCreateView(CreateView):
     model = Booking
@@ -11,10 +12,12 @@ class BookingCreateView(CreateView):
     def get_success_url(self):
         return redirect('booking-list')
 
+
 class BookingCancelView(DeleteView):
     model = Booking
     template_name = 'crm/cancel.html'
     success_url = '/crm/booking/list'
+
 
 class BookingUpdateView(UpdateView):
     model = Booking
@@ -24,9 +27,11 @@ class BookingUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('booking-list')
 
+
 class BookingView(DetailView):
     model = Booking
     template_name = 'crm/view.html'
+
 
 class BookingList(ListView):
     model = Booking
@@ -47,12 +52,13 @@ class BookingList(ListView):
 
         return queryset
 
+
 class BookingSearch(ListView):
     model = Booking
     template_name = 'crm/search.html'
 
     def get_queryset(self):
-        queryset = Booking.objects.all()
+        queryset = super().get_queryset()  # Наследуем исходный набор данных
         search_term = self.request.GET.get('search_term')
 
         if search_term:
@@ -62,3 +68,4 @@ class BookingSearch(ListView):
             )
 
         return queryset
+

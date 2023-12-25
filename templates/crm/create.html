@@ -3,7 +3,36 @@
 
 {% block content %}
   {% if user.is_authenticated %}
+<h1>Оренда ПЗ</h1>
 
+<form method="post" action="{% url 'rent_software' %}">
+  {% csrf_token %}
+
+  <label for="client">Клієнт/орендувач:</label>
+  <input type="text" name="client" id="client" required>
+
+  <label for="software">Тип ПЗ:</label>
+  <select name="software" id="software" required>
+    {% for software in softwares %}
+      <option value="{{ software.id }}">{{ software.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="price">Ціна оренди:</label>
+  <input type="number" name="price" id="price" required>
+
+  <label for="discount">Пільга:</label>
+  <select name="discount" id="discount">
+    <option value="">---</option>
+    <option value="birthday">День народження</option>
+    <option value="pensioner">Соціальна пільга</option>
+    <option value="immigrant">Переселенець</option>
+    <option value="volunteer">Волонтер</option>
+    <option value="corporate">Корпоративне замовлення</option>
+  </select>
+
+  <button type="submit">Оформити оренду</button>
+</form>
   {% endif %}
 {% endblock %}
 
