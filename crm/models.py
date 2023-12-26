@@ -133,6 +133,8 @@ class Booking(models.Model):
 # 5 Обрати пільгу: ДР,
 # 6 Цена итого
 # 7 вся Инфа о заказе в текстовом виде для помещения в комментарий к бронированию
+
+
 class BookingHistory(models.Model):
     status = models.CharField(max_length=1, choices=[('C', 'В обробці'), ('B', 'Затверджено'), ('R', 'Відхилено')],
                               verbose_name="Статус бронювання")
