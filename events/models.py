@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from crm.models import MyUser
 
+
 class Trip(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
