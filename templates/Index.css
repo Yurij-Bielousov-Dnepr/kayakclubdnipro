@@ -21,3 +21,9 @@ ul {
 ul li {
       margin-bottom: 5px;
     }
+.center-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
