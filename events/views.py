@@ -42,6 +42,22 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 
+
+def trip_list(request):
+    trips = Trip.objects.all()
+    return render(request, 'trips/trip_list.html', {'trips': trips})
+
+def trip_detail(request, pk):
+    trip = get_object_or_404(Trip, pk=pk)
+    return render(request, 'trips/trip_detail.html', {'trip': trip})
+
+def event_list(request):
+    events = Event.objects.all()
+    return render(request, 'events/event_list.html', {'events': events})
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'events/event_detail.html', {'event': event})
 # Классы-представления для статей (Article)
 class ArticleListView(ListView):
     model = Article
