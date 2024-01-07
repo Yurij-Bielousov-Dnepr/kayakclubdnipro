@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
-from django_countries import countries
+# from django_countries import countries
 from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from django.forms import ModelForm
@@ -24,7 +24,7 @@ from django.views.generic import (
 )
 from .decorators import admin_only
 from .forms import *
-from .models import *
+from .models import Trip, Event
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -59,10 +59,6 @@ def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     return render(request, 'events/event_detail.html', {'event': event})
 # Классы-представления для статей (Article)
-class ArticleListView(ListView):
-    model = Article
-    template_name = "art_event/articles.html"
-    context_object_name = "articles"
 
 class Events_detail(DetailView):
     model = Event

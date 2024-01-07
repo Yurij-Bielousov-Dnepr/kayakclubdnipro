@@ -1,0 +1,13 @@
+{% extends "base_templates\base.html" %}
+<h1>  день</h1> 
+<h3>
+   
+</h3>
+<h1>{{ trip }}</h1>
+<p>{{ trip.date }} - {{ trip.start_time }} - {{ trip.length_in_days }} днів</p>
+<p>{{ trip.description }}</p>
+<p>Організатор: {{ trip.organizer }}</p>
+<p>Ціна: {{ trip.price }}</p>
+<p>Місце: {{ trip.place }}</p>
+<p>Максимальна кількість учасників: {{ trip.maximum_participants }}</p>
+<p>Реєстрація: {{ trip.registration }}</p>

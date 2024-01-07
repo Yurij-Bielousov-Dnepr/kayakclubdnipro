@@ -1,0 +1,9 @@
+{% extends "base_templates\base.html" %}
+<h1>{{ event }}</h1>
+<p>{{ event.date }} - {{ event.start_time }} - {{ event.length_in_hours }} годин</p>
+<p>{{ event.description }}</p>
+<p>Організатор: {{ event.organizer }}</p>
+<p>Ціна: {{ event.price }}</p>
+<p>Місце: {{ event.place }}</p>
+<p>Максимальна кількість учасників: {{ event.maximum_participants }}</p>
+<p>Реєстрація: {{ event.registration }}</p>

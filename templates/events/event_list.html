@@ -1,0 +1,6 @@
+{% extends "base_templates\base.html" %}
+{% for event in events %}
+<h2><a href="{% url 'event_detail' event.pk %}">{{ event }}</a></h2>
+<p>{{ event.date }} - {{ event.start_time }} - {{ event.length_in_hours }} годин</p>
+<p>{{ event.description }}</p>
+{% endfor %}
