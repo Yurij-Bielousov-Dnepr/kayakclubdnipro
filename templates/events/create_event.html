@@ -1,0 +1,10 @@
+{% extends 'base_templates\base.html' %}
+
+{% block content %}
+<h1>Створити подію</h1>
+<form action="{% url 'create_event' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Створити">
+</form>
+{% endblock %}
