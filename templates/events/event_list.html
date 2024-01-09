@@ -1,6 +1,20 @@
 {% extends "base_templates\base.html" %}
+
+{% block content %}
+
+{% if user.is_superuser %}
+<a href="{% url 'create_event' %}" class="btn btn-primary">Створити подію</a>
+{% endif %}
+
 {% for event in events %}
 <h2><a href="{% url 'event_detail' event.pk %}">{{ event }}</a></h2>
 <p>{{ event.date }} - {{ event.start_time }} - {{ event.length_in_hours }} годин</p>
 <p>{{ event.description }}</p>
+
+{% if user.is_superuser %}
+<a href="{% url 'edit_event' event.pk %}" class="btn btn-info">Редагувати</a>
+{% endif %}
+
 {% endfor %}
+
+{% endblock %}
