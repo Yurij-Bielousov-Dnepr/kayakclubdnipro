@@ -1,0 +1,28 @@
+Сторінка: З Відгуками...
+
+тут не так просто:
+import requests
+
+def get_reviews_url(place_id):
+    """Получает ссылку на страницу с отзывами о месте с ID place_id."""
+
+    url = "https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&key={key}"
+    headers = {
+        "Authorization": "Bearer {key}",
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        url = data["result"]["url"]
+        return url
+    else:
+        return None
+
+
+url = get_reviews_url("ChIJN1t_t0tXz4kRQ9n6gGKqlQ0")
+print(url)
+ Этот код вернет ссылку на страницу с отзывами о месте с ID ChIJN1t_t0tXz4kRQ9n6gGKqlQ0
+
+{% extends "base_templates\base.html" %}
+<h3>
+</h3>
